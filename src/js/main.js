@@ -12,23 +12,29 @@ window.onload = function () {
 	drawWorld(map);
 	const path = BFS(map, pacman)
 	console.log(pacman, path)
-	path.forEach((direction) => {
-		setTimeout(function() {
+	path.forEach((direction,index) => {
+		console.log('1',direction);
+		setTimeout(()=> {
+			console.log('2',direction);
 			switch (direction) {
 				case 'up':
-					setTimeout(goUp(map,pacman), 1000)
+					// setTimeout(goUp,4000,map,pacman)
+					goUp(map,pacman);
 					break
 				case 'down':
-					setTimeout(goDown(map,pacman), 1000)
+					// setTimeout(goDown,4000,map,pacman)
+					goDown(map,pacman);
 					break
 				case 'left':
-					setTimeout(goLeft(map,pacman), 1000)
+					// setTimeout(goLeft,4000,map,pacman)
+					goLeft(map,pacman);
 					break
 				case 'right':
-					setTimeout(goRight(map,pacman), 1000)
+					goRight(map,pacman);
+					// setTimeout(goRight,4000,map,pacman)
 					break				
 			}
-		}, 1000)
+		},2000*(index+1))
 	})
 }
 
@@ -39,13 +45,13 @@ window.onload = function () {
 
 	map = [ //level 1
 		[1,1,1,1,1,1,1,1,1,1,1,1,1], 
-		[1,0,3,0,0,0,1,0,0,0,2,1,1], 
+		[1,0,3,0,0,0,1,0,0,0,0,1,1], 
 		[1,0,1,1,0,0,1,0,1,1,1,0,1], 
 		[1,0,1,0,0,0,0,0,0,0,1,0,1], 
-		[1,0,0,0,1,1,5,1,1,0,0,0,1], 
-		[1,0,1,0,0,0,0,0,0,0,1,0,1], 
-		[1,0,1,1,0,0,1,0,0,1,1,0,1], 
-		[1,0,0,0,0,0,1,0,0,0,0,0,1], 
+		[1,0,0,0,0,0,5,1,1,0,0,0,1], 
+		[1,0,0,0,0,0,0,0,0,0,1,0,1], 
+		[1,0,1,1,1,0,1,0,0,1,1,0,1], 
+		[1,0,2,0,1,1,1,0,0,0,0,0,1], 
 		[1,1,1,1,1,1,1,1,1,1,1,1,1]
 	]
 
@@ -66,6 +72,9 @@ window.onload = function () {
 				}
 				else if (map[i][j] === 0) {
 					el.innerHTML += "<div class='ground'></div>";
+				}
+				else if (map[i][j] === 6) {
+					el.innerHTML += "<div class='visitted'></div>";
 				}
 				else if (map[i][j] === 4) {
 					el.innerHTML += "<div class='monster'></div>";
