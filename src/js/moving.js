@@ -22,7 +22,7 @@ function goUp(map, pacman){
     }
 }
 
-function goLeft(map, pacman){
+function goLeft(map, pacman) {
     if (canMove(map, pacman.i, pacman.j-1)) {
         map[pacman.i][pacman.j] = 6;
         pacman.j = pacman.j - 1;

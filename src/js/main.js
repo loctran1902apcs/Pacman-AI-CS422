@@ -12,32 +12,51 @@ window.onload = function () {
 	drawWorld(map);
 	const path = BFS(map, pacman)
 	console.log(pacman, path)
-	path.forEach((direction,index) => {
-		console.log('1',direction);
-		setTimeout(()=> {
-			console.log('2',direction);
-			switch (direction) {
-				case 'up':
-					// setTimeout(goUp,4000,map,pacman)
-					goUp(map,pacman);
-					break
-				case 'down':
-					// setTimeout(goDown,4000,map,pacman)
-					goDown(map,pacman);
-					break
-				case 'left':
-					// setTimeout(goLeft,4000,map,pacman)
-					goLeft(map,pacman);
-					break
-				case 'right':
-					goRight(map,pacman);
-					// setTimeout(goRight,4000,map,pacman)
-					break				
-			}
-		},2000*(index+1))
-	})
+	if (path.length >= 10) {
+		console.log('Duong di nhieu hon >10 steps. Quyet dinh khong di de lay 0 diem')
+		// Cho nay bao la khong di tai vi di qua 10 step
+		// An 1 food co 10 point -> point < 0
+		// Dung yen thi point = 0 ngon hon
+		// Bao len man hinh la 'End Game. Point = 0'
+	}
+	else if (path.length == 0) {
+		console.log('Khong tim duoc duong di toi food.')
+		console.log('Diem so dat duoc: ', point)
+	}
+	else {		
+		path.forEach((direction,index) => {
+			console.log('1',direction);
+			setTimeout(()=> {
+				console.log('2',direction);
+				switch (direction) {
+					case 'up':
+						// setTimeout(goUp,4000,map,pacman)
+						goUp(map,pacman);
+						break
+					case 'down':
+						// setTimeout(goDown,4000,map,pacman)
+						goDown(map,pacman);
+						break
+					case 'left':
+						// setTimeout(goLeft,4000,map,pacman)
+						goLeft(map,pacman);
+						break
+					case 'right':
+						goRight(map,pacman);
+						// setTimeout(goRight,4000,map,pacman)
+						break
+				}
+			},200*(index+1))
+		})
+		point  = 10 - path.length
+		console.log('Diem so dat duoc: ', point)
+		console.log(map)
+		// Cho nay hien thi len man hinh so point dat duoc
+		// 'End game. Point = ...'
+	}
 }
 
+	point = 0
 	pacman = {
 		i: 4,
 		j: 6
