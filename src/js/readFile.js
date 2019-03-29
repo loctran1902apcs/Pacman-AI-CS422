@@ -15,7 +15,3 @@ function readTextFile(file)
     }
     rawFile.send(null);
 }
-
-$.get("textFile.txt", function(data) {
-    var items = data.split("\r\n").map(function(el){ return el.split(" ");});
-});

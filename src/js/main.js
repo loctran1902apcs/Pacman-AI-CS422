@@ -70,6 +70,7 @@ window.onload = function () {
 		[1,1,1,1,1,1,1,1,1,1,1,1,1]
 	]
 
+	// readTextFile('map1.txt')
 	var el = document.getElementById('world');
 	
 	function drawWorld(){
