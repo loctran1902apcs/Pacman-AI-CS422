@@ -30,20 +30,16 @@ window.onload = function () {
 				console.log('2',direction);
 				switch (direction) {
 					case 'up':
-						// setTimeout(goUp,4000,map,pacman)
 						goUp(map,pacman);
 						break
 					case 'down':
-						// setTimeout(goDown,4000,map,pacman)
 						goDown(map,pacman);
 						break
 					case 'left':
-						// setTimeout(goLeft,4000,map,pacman)
 						goLeft(map,pacman);
 						break
 					case 'right':
 						goRight(map,pacman);
-						// setTimeout(goRight,4000,map,pacman)
 						break
 				}
 			},200*(index+1))
