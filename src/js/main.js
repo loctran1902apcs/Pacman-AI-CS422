@@ -1,74 +1,51 @@
-// import "./moving";
 // All of our JavaScript code goes here... 
 	
-	// 1 => <div class='wall'></div>
-	// 2 => <div class='coin'></div>
-	// 3 => <div class='ground'></div>
-	// 4 => <div class='ghost'></div>
-	// 5 => <div class='pacman'></div>
-	// map = [ 1, 2, 3 ]
-	// map = [ [1,2,3], [1,2,3], [1,2,3] ];
-window.onload = function () { 
+// 1 => <div class='wall'></div>
+// 2 => <div class='coin'></div>
+// 3 => <div class='ground'></div>
+// 4 => <div class='ghost'></div>
+// 5 => <div class='pacman'></div>
+// map = [ 1, 2, 3 ]
+// map = [ [1,2,3], [1,2,3], [1,2,3] ];
+
+window.onload = function () {
+	console.log(1)
+	map = readFile("./map/map1.txt", inputMap, pacman)
+
 	drawWorld(map);
 	const path = BFS(map, pacman)
 	console.log(pacman, path)
-	if (path.length >= 10) {
-		console.log('Duong di nhieu hon >10 steps. Quyet dinh khong di de lay 0 diem')
-		// Cho nay bao la khong di tai vi di qua 10 step
-		// An 1 food co 10 point -> point < 0
-		// Dung yen thi point = 0 ngon hon
-		// Bao len man hinh la 'End Game. Point = 0'
-	}
-	else if (path.length == 0) {
-		console.log('Khong tim duoc duong di toi food.')
-		console.log('Diem so dat duoc: ', point)
-	}
-	else {		
-		path.forEach((direction,index) => {
-			console.log('1',direction);
-			setTimeout(()=> {
-				console.log('2',direction);
-				switch (direction) {
-					case 'up':
-						goUp(map,pacman);
-						break
-					case 'down':
-						goDown(map,pacman);
-						break
-					case 'left':
-						goLeft(map,pacman);
-						break
-					case 'right':
-						goRight(map,pacman);
-						break
-				}
-			},200*(index+1))
-		})
-		point  = 10 - path.length
-		console.log('Diem so dat duoc: ', point)
-		console.log(map)
-		// Cho nay hien thi len man hinh so point dat duoc
-		// 'End game. Point = ...'
-	}
+	path.forEach((direction,index) => {
+		console.log('1',direction);
+		setTimeout(()=> {
+			console.log('2',direction);
+			switch (direction) {
+				case 'up':
+					// setTimeout(goUp,4000,map,pacman)
+					goUp(map,pacman);
+					break
+				case 'down':
+					// setTimeout(goDown,4000,map,pacman)
+					goDown(map,pacman);
+					break
+				case 'left':
+					// setTimeout(goLeft,4000,map,pacman)
+					goLeft(map,pacman);
+					break
+				case 'right':
+					goRight(map,pacman);
+					// setTimeout(goRight,4000,map,pacman)
+					break				
+			}
+		},2000*(index+1))
+	})
 }
 
-	point = 0
 	pacman = {
-		i: 4,
-		j: 6
+		i: 0,
+		j: 0
 	}
 
-	map = [ //level 1
-		[1,1,1,1,1,1,1,1,1,1,1,1,1], 
-		[1,0,3,0,0,0,1,0,0,0,0,1,1], 
-		[1,0,1,1,0,0,1,0,1,1,1,0,1], 
-		[1,0,1,0,0,0,0,0,0,0,1,0,1], 
-		[1,0,0,0,0,0,5,1,1,0,0,0,1], 
-		[1,0,0,0,0,0,0,0,0,0,1,0,1], 
-		[1,0,1,1,1,0,1,0,0,1,1,0,1], 
-		[1,0,2,0,1,1,1,0,0,0,0,0,1], 
-		[1,1,1,1,1,1,1,1,1,1,1,1,1]
-	]
 
 	// readTextFile('map1.txt')
 	var el = document.getElementById('world');
@@ -121,4 +98,41 @@ window.onload = function () {
 		}
     }
     
-   
+	function readFile(path, callback, pacman) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", path, true);
+		xhr.onload = function (e) {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+			callback(xhr.responseText, pacman);
+			} else {
+			console.error(xhr.statusText);
+			}
+		}
+		};
+		xhr.onerror = function (e) {
+		console.error(xhr.statusText);
+		};
+		xhr.send(null);
+	}
+	
+	function inputMap(text, pacman) {
+		var items = text.split("\n").map(function(el){ return el.split(" ");});
+		var m = items[0][0]
+		var n = items[0][1]
+		var map = []
+		for (let i = 0; i < m; i++) {
+			var line = []
+			for (let j = 0; j < n; j++) {
+				line.push(items[i+1][j])
+				if (items[i+1][j] == 5) {
+					pacman.i=i+1
+					pacman.j=j
+				}
+			}
+			map.push(line)
+		}
+		
+		console.log("map: ", map)
+		return map
+	}
